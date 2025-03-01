@@ -1,8 +1,17 @@
-# test_app.py
 import unittest
-# For a simple example, we simply test True.
+from app import app
+
 class TestApp(unittest.TestCase):
-    def test_output(self):
-        self.assertTrue(True)
+    def test_home_route(self):
+        tester = app.test_client(self)
+        response = tester.get('/')
+        self.assertEqual(response.status_code, 200)
+        
+    def test_status_route(self):
+        tester = app.test_client(self)
+        response = tester.get('/status')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, b"Service is running!")
+
 if __name__ == "__main__":
     unittest.main()
